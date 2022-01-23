@@ -9,17 +9,17 @@ void CreateButterfly::setup(){
 void CreateButterfly::update(){
     c1 = circlePoints(globDef, 1);  //mainCircle
     finalPoints = c1;
-    c2 = circlePoints(globDef, 1);  //mainCircle
+    c2 = circlePoints(globDef, 0);  //mainCircle
     for(int i = 0; i < finalPoints.size(); i ++){
         float theta = (((TWO_PI / globDef) * i)); //rotation Offset
-        float theta2 = (((PI / globDef) * i)); //rotation Offset
+        float theta2 = ((((TWO_PI * 2) / globDef) * i)); //rotation Offset
 
         if(i < finalPoints.size() / 2){
-            finalPoints[i].x -= c2[i].x * (sin(theta2 * (ofGetMouseX()) / ofGetWidth()));
+            finalPoints[i].y -= c2[i].x * (cos(theta + (TWO_PI * (ofGetMouseX()) / ofGetWidth())));
             finalPoints[i].y -= c2[i].y * (cos(theta + (TWO_PI * (ofGetMouseY()) / ofGetHeight())));
         }
         else{
-            finalPoints[i].x -= c2[i].x * (sin(theta2 * (ofGetMouseX()) / ofGetWidth()));
+            finalPoints[i].y -= c2[i].x * (cos(theta + (TWO_PI * (ofGetMouseX()) / ofGetWidth())));
             finalPoints[i].y -= c2[i].y * (cos(theta + (TWO_PI * (ofGetMouseY()) / ofGetHeight())));
         }
     }
