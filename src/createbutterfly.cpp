@@ -1,25 +1,27 @@
 #include "createbutterfly.h"
 //-----------------------------------------------------------
 void CreateButterfly::setup(){
-    globDef = 50;
-    sSpace = ofVec2f(ofGetWidth(), ofGetHeight());    //screen space
+    globDef = 100;
+    sSpace = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);    //screen space
     cRef = sSpace/2.;
 }
 //-----------------------------------------------------------
 void CreateButterfly::update(){
-    c1 = circlePoints(globDef, 0);  //mainCircle
+    c1 = circlePoints(globDef, 1);  //mainCircle
     finalPoints = c1;
+    c2 = circlePoints(globDef, 1);  //mainCircle
     for(int i = 0; i < finalPoints.size(); i ++){
         float theta = (((TWO_PI / globDef) * i)); //rotation Offset
-        //float x = finalPoints[i].x;
-        //float y = finalPoints[i].y;
+        float theta2 = (((PI / globDef) * i)); //rotation Offset
+
         if(i < finalPoints.size() / 2){
-            finalPoints[i].x -= finalPoints[i].x * (sin(theta) * 0.1);
-            finalPoints[i].y -= finalPoints[i].y * (cos(theta) * (ofGetMouseX()) / ofGetWidth());
-            //x *= cos(theta) + 0.1;
+            finalPoints[i].x -= c2[i].x * (sin(theta2 * (ofGetMouseX()) / ofGetWidth()));
+            finalPoints[i].y -= c2[i].y * (cos(theta + (TWO_PI * (ofGetMouseY()) / ofGetHeight())));
         }
-        ///ofVec2f end = ofVec2f(x, y);
-        //finalPoints[i] = end;
+        else{
+            finalPoints[i].x -= c2[i].x * (sin(theta2 * (ofGetMouseX()) / ofGetWidth()));
+            finalPoints[i].y -= c2[i].y * (cos(theta + (TWO_PI * (ofGetMouseY()) / ofGetHeight())));
+        }
     }
 }
 
@@ -28,7 +30,7 @@ void CreateButterfly::draw(){
     if(finalPoints.size() > 0){
         for(int i = 0; i < finalPoints.size(); i ++){
             finalPoints[i] *= sSpace / 2;
-            finalPoints[i] += cRef;
+            finalPoints[i] += cRef * 2;
             cout << ", X= " << finalPoints[i].x;
             cout << " Y=" << finalPoints[i].y;
             if(i < finalPoints.size() / 2){
